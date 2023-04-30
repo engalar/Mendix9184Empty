@@ -1,0 +1,41 @@
+name: Mendix App Build
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Mono
+      uses: mono/setup-mono@v1
+      with:
+        mono-version: '6.x'
+
+    - name: Cache Mendix mxbuild
+      uses: actions/cache@v2
+      with:
+        path: mxbuild-9.18.4.62522
+        key: mxbuild-9.18.4.62522
+
+    - name: Download and extract mxbuild
+      run: |
+        if [ ! -d "mxbuild-9.18.4.62522" ]; then
+          wget https://cdn.mendix.com/runtime/mxbuild-9.18.4.62522.tar.gz
+          mkdir mxbuild-9.18.4.62522
+          tar -xzf mxbuild-9.18.4.62522.tar.gz -C mxbuild-9.18.4.62522
+        fi
+
+    - name: Show Mendix version
+      run: |
+        mono mxbuild-9.18.4.62522/modeler/mx show-version App1/App1.mpr
+
+    - name: Build Mendix project
+      run: |
+        mono mxbuild-9.18.4.62522/modeler/mxbuild.exe --java-home="$(/usr/libexec/java_home)" --java-exe-path="$(/usr/libexec/java_home)/bin/java" App1/App1.mpr
