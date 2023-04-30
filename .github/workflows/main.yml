@@ -13,10 +13,10 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Set up Mono
-      uses: mono/setup-mono@v1
-      with:
-        mono-version: '6.x'
+    - name: Install Mono
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y mono-complete
 
     - name: Cache Mendix mxbuild
       uses: actions/cache@v2
@@ -38,4 +38,4 @@ jobs:
 
     - name: Build Mendix project
       run: |
-        mono mxbuild-9.18.4.62522/modeler/mxbuild.exe --java-home="$(/usr/libexec/java_home)" --java-exe-path="$(/usr/libexec/java_home)/bin/java" App1/App1.mpr
+        mono mxbuild-9.18.4.62522/modeler/mxbuild.exe --java-home="$(/usr/libexec/java_home)" --java-exe-path="$(/usr/libexec/java_home)/bin/java" Mendix9184Empty.mpr
