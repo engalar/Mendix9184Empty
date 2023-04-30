@@ -34,7 +34,7 @@ jobs:
 
     - name: Show Mendix version
       run: |
-        mono mxbuild-9.18.4.62522/modeler/mx show-version App1/App1.mpr
+        mono mxbuild-9.18.4.62522/modeler/mx.exe show-version Mendix9184Empty.mpr
 
     - name: Build Mendix project
       run: |
