@@ -40,8 +40,13 @@ jobs:
     - name: Build Mendix project
       run: |
         mono mxbuild-9.18.4.62522/modeler/mxbuild.exe --java-home="/usr/lib/jvm/java-11-openjdk-amd64/" --java-exe-path="/usr/lib/jvm/java-11-openjdk-amd64/bin/java" Mendix9184Empty.mpr
-    - name: Upload a Build Artifact
-      uses: actions/upload-artifact@v3.1.2
+
+    - name: "Release MDA Files"
+      uses: marvinpinto/action-automatic-releases@v1.2.1
       with:
-        name: artifact
-        path: out.mda
+         repo_token: "${{ secrets.GITHUB_TOKEN }}"
+         automatic_release_tag: "latest"
+         prerelease: false
+         title: "Mendix deploy achieve"
+         files: |
+              *.mda
