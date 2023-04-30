@@ -13,10 +13,11 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Install Mono
+    - name: Install Mono and OpenJDK 11
       run: |
         sudo apt-get update
         sudo apt-get install -y mono-complete
+        sudo apt install -y openjdk-11-jdk
 
     - name: Cache Mendix mxbuild
       uses: actions/cache@v2
@@ -38,4 +39,4 @@ jobs:
 
     - name: Build Mendix project
       run: |
-        mono mxbuild-9.18.4.62522/modeler/mxbuild.exe --java-home="$(/usr/libexec/java_home)" --java-exe-path="$(/usr/libexec/java_home)/bin/java" Mendix9184Empty.mpr
+        mono mxbuild-9.18.4.62522/modeler/mxbuild.exe --java-home="/usr/lib/jvm/java-11-openjdk-amd64/" --java-exe-path="/usr/lib/jvm/java-11-openjdk-amd64/bin/java" Mendix9184Empty.mpr
